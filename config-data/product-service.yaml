@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/productservice
+    url: jdbc:mysql://localhost:3306/product_db
     username: root
     password: ${DB_PASSWORD}
 
