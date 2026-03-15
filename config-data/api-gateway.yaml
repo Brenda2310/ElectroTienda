@@ -19,3 +19,9 @@ spring:
           uri: lb://SALES-SERVICE
           predicates:
                 - Path=/sales/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway
