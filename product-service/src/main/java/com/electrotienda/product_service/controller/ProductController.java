@@ -1,8 +1,7 @@
 package com.electrotienda.product_service.controller;
 
 import com.electrotienda.product_service.dto.ProductDTO;
-import com.electrotienda.product_service.entity.ProductEntity;
-import com.electrotienda.product_service.service.ProductService;
+import com.electrotienda.product_service.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,7 @@ import java.util.List;
 @RequestMapping("/products")
 @RequiredArgsConstructor
 public class ProductController{
-    private final ProductService service;
+    private final IProductService service;
 
     @GetMapping
     public ResponseEntity<List<ProductDTO>> getAllProducts(){
@@ -22,7 +21,7 @@ public class ProductController{
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id){
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable("id") Long id){
         return ResponseEntity.ok(service.getProductById(id));
     }
 
