@@ -11,14 +11,14 @@ spring:
             - Path=/cart/**
 
         - id: product-route
-          uri: http://localhost:8082
+          uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/products/**
 
         - id: sales-route
           uri: lb://SALES-SERVICE
           predicates:
-                - Path=/sales/**
+            - Path=/sales/**
 
 management:
   endpoints:
