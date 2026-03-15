@@ -7,4 +7,5 @@ public interface ICartService {
     CartDTO addProductToCart(Long cartId, Long productId, Integer quantity);
     ProductDTO getProtectedProduct(Long productId);
     ProductDTO fallbackGetProduct(Long productId, Throwable throwable);
+    CartDTO getCartById(Long id);
 }
