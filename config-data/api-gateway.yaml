@@ -9,16 +9,22 @@ spring:
           uri: lb://CART-SERVICE
           predicates:
             - Path=/cart/**
+          filters:
+            - StripPrefix=1
 
         - id: product-route
           uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/products/**
+          filters:
+            - StripPrefix=1
 
         - id: sales-route
           uri: lb://SALES-SERVICE
           predicates:
             - Path=/sales/**
+          filters:
+            - StripPrefix=1
 
 management:
   endpoints:
