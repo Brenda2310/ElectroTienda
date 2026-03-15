@@ -6,17 +6,17 @@ spring:
     gateway:
       routes:
         - id: cart-route
-          uri: lb://CART-SERVICE
+          uri: lb://cart-service
           predicates:
             - Path=/cart,/cart/**
 
         - id: product-route
-          uri: lb://PRODUCT-SERVICE
+          uri: lb://product-service
           predicates:
             - Path=/products,/products/**
 
         - id: sales-route
-          uri: lb://SALES-SERVICE
+          uri: lb://sales-service
           predicates:
             - Path=/sales,/sales/**
 
