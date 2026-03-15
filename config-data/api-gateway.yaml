@@ -11,7 +11,7 @@ spring:
             - Path=/cart/**
 
         - id: product-route
-          uri: lb://PRODUCT-SERVICE
+          uri: http://localhost:8082
           predicates:
             - Path=/products/**
 
