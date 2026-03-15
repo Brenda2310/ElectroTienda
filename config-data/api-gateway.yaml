@@ -4,6 +4,10 @@ server:
 spring:
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
       routes:
         - id: cart-route
           uri: lb://cart-service
