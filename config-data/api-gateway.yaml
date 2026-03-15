@@ -8,17 +8,17 @@ spring:
         - id: cart-route
           uri: lb://cart-service
           predicates:
-            - Path=/cart,/cart/**
+            - Path=/cart/**
 
         - id: product-route
           uri: lb://product-service
           predicates:
-            - Path=/products,/products/**
+            - Path=/products/**
 
         - id: sales-route
           uri: lb://sales-service
           predicates:
-            - Path=/sales,/sales/**
+            - Path=/sales/**
 
 management:
   endpoints:
