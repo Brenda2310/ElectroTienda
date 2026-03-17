@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
     private final ICartService service;
 
-    @PostMapping
+    @PostMapping("/add/{cartId}")
     public ResponseEntity<CartDTO> addProductToCart(
             @PathVariable Long cartId,
             @RequestParam Long productId,
