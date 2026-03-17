@@ -3,3 +3,9 @@ spring:
     name: api-gateway
   config:
     import: optional:configserver:http://localhost:8081
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

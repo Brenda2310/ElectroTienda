@@ -28,7 +28,11 @@ management:
   endpoints:
     web:
       exposure:
-        include: gateway
+        include: "*"
+
+  endpoint:
+    gateway:
+      enabled: true
 
 eureka:
   client:
