@@ -11,19 +11,19 @@ spring:
         - id: cart-route
           uri: http://localhost:8084
           predicates:
-            - Path=/cart/**
+            - Path=/cart, /cart/**
 
 
         - id: product-route
           uri: http://localhost:8082
           predicates:
-            - Path=/products/**
+            - Path=/products, /products/**
 
 
         - id: sales-route
           uri: http://localhost:8085
           predicates:
-            - Path=/sales/**
+            - Path=/sales, /sales/**
 
 
 management:
