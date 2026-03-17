@@ -8,4 +8,6 @@ public interface ICartService {
     ProductDTO getProtectedProduct(Long productId);
     ProductDTO fallbackGetProduct(Long productId, Throwable throwable);
     CartDTO getCartById(Long id);
+    Boolean checkProtectedStock(Long productId, Integer quantity);
+    Boolean fallbackCheckStock(Long productId, Integer quantity, Throwable throwable);
 }

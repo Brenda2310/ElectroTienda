@@ -7,5 +7,5 @@ import java.util.List;
 public interface IProductService {
     List<ProductDTO> getAllProducts();
     ProductDTO getProductById(Long id);
-    ProductDTO createProduct(ProductDTO product);
+    ProductDTO createProduct(ProductDTO product, Integer initialStock);
 }

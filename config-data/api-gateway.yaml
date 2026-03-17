@@ -23,6 +23,10 @@ spring:
             - name: Path
               args:
                 pattern: /sales/**
+        - id: inventory-route
+          uri: http://localhost:8087
+          predicates:
+              - Path=/inventory/**
 
 management:
   endpoints:

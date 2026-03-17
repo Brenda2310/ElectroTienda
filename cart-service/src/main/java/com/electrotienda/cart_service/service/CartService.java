@@ -1,5 +1,6 @@
 package com.electrotienda.cart_service.service;
 
+import com.electrotienda.cart_service.client.InventoryClient;
 import com.electrotienda.cart_service.client.ProductClient;
 import com.electrotienda.cart_service.dto.CartDTO;
 import com.electrotienda.cart_service.dto.CartItemDTO;
@@ -24,12 +25,19 @@ public class CartService implements ICartService{
 
     private final CartRepository repository;
     private final ProductClient client;
+    private final InventoryClient inventoryClient;
     @Autowired
     @Lazy
     private ICartService self;
 
     @Override
     public CartDTO addProductToCart(Long cartId, Long productId, Integer quantity) {
+        Boolean isStockAvailable = self.checkProtectedStock(productId, quantity);
+
+        if (!isStockAvailable) {
+            throw new RuntimeException("Cannot add to cart: There is not enough stock or the inventory service is temporarily down.");
+        }
+
         Cart cart = repository.findById(cartId).orElse(new Cart());
 
         ProductDTO productDTO = self.getProtectedProduct(productId);
@@ -76,6 +84,18 @@ public class CartService implements ICartService{
     public CartDTO getCartById(Long id) {
         Cart cart = repository.findById(id).orElseThrow(()-> new NoSuchElementException("Cart not found"));
         return mapToCartDTO(cart);
+    }
+
+    @Override
+    @CircuitBreaker(name = "inventory-service", fallbackMethod = "fallbackCheckStock")
+    public Boolean checkProtectedStock(Long productId, Integer quantity) {
+        return inventoryClient.checkStock(productId, quantity);
+    }
+
+    @Override
+    public Boolean fallbackCheckStock(Long productId, Integer quantity, Throwable throwable) {
+        log.error("Fallo al comunicarse con inventory-service para validar stock del producto: {}", productId);
+        return false;
     }
 
     private CartDTO mapToCartDTO(Cart cart){

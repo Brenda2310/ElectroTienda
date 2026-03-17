@@ -2,8 +2,10 @@ package com.electrotienda.product_service.service;
 
 import com.electrotienda.product_service.dto.ProductDTO;
 import com.electrotienda.product_service.entity.ProductEntity;
+import com.electrotienda.product_service.event.ProductCreatedEvent;
 import com.electrotienda.product_service.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 public class ProductService implements IProductService{
 
     private final ProductRepository repository;
+    private final KafkaTemplate<String, ProductCreatedEvent> kafkaTemplate;
 
     @Override
     public List<ProductDTO> getAllProducts() {
@@ -31,7 +34,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public ProductDTO createProduct(ProductDTO productDTO) {
+    public ProductDTO createProduct(ProductDTO productDTO, Integer initialStock) {
         ProductEntity product = ProductEntity.builder()
                 .id(productDTO.getId())
                 .price(productDTO.getPrice())
@@ -41,6 +44,14 @@ public class ProductService implements IProductService{
                 .build();
 
         ProductEntity savedProduct = repository.save(product);
+
+        ProductCreatedEvent event = ProductCreatedEvent.builder()
+                .productId(product.getId())
+                .initialStock(initialStock)
+                .build();
+
+        System.out.println("Enviando evento a Kafka: Producto "+ savedProduct.getId() +"creado con stock " + initialStock);
+        kafkaTemplate.send("product-topic", event);
 
         return mapToDTO(savedProduct);
     }
