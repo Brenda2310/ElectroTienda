@@ -4,27 +4,19 @@ server:
 spring:
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: false
       routes:
-        - id: cart-route
-          uri: http://localhost:8084
-          predicates:
-            - Path=/cart, /cart/**
-
-
         - id: product-route
           uri: http://localhost:8082
           predicates:
-            - Path=/products, /products/**
-
-
+            - Path=/products/**
+        - id: cart-route
+          uri: http://localhost:8084
+          predicates:
+            - Path=/cart/**
         - id: sales-route
           uri: http://localhost:8085
           predicates:
-            - Path=/sales, /sales/**
-
+            - Path=/sales/**
 
 management:
   endpoints:
