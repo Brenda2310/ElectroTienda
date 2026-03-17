@@ -14,11 +14,15 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
+@KafkaListener(
+        topics = "inventory-topic",
+        groupId = "inventory-group-v1"
+)
 public class InventoryConsumer {
     private final IInventoryService service;
     private final CartClient client;
 
-    @KafkaListener(topics = "notification-topic", groupId = "inventory-group")
+    @KafkaHandler
     public void consumeSaleEvent(SaleCreatedEvent event) {
         log.info("📥 Evento recibido en Inventario para la Venta ID: {}", event.getSaleId());
 
@@ -36,7 +40,7 @@ public class InventoryConsumer {
         }
     }
 
-    @KafkaListener(topics = "product-topic", groupId = "inventory-group")
+    @KafkaHandler
     public void consumeProductCreated(ProductCreatedEvent event) {
         log.info("📥 Evento recibido de Kafka: Inicializando stock para Producto ID: {}", event.getProductId());
 
@@ -45,6 +49,11 @@ public class InventoryConsumer {
         } catch (Exception e) {
             log.error("❌ Error al inicializar el stock: {}", e.getMessage());
         }
+    }
+
+    @KafkaHandler(isDefault = true)
+    public void unknownEvent(Object event) {
+        log.warn("❓ [DESCONOCIDO] Se recibió un evento que no sé procesar: {}", event.getClass().getName());
     }
 }
 

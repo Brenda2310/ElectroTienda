@@ -51,7 +51,7 @@ public class ProductService implements IProductService{
                 .build();
 
         System.out.println("Enviando evento a Kafka: Producto "+ savedProduct.getId() +"creado con stock " + initialStock);
-        kafkaTemplate.send("product-topic", event);
+        kafkaTemplate.send("inventory-topic", event);
 
         return mapToDTO(savedProduct);
     }

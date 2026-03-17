@@ -49,7 +49,7 @@ public class SaleService implements ISaleService{
                 .totalAmount(cart.getTotalPrice())
                 .build();
 
-        kafkaTemplate.send("notification-topic", event);
+        kafkaTemplate.send("inventory-topic", event);
 
         return saved;
     }
