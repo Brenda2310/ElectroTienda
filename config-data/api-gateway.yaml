@@ -9,22 +9,22 @@ spring:
           enabled: false
       routes:
         - id: cart-route
-          uri: lb://cart-service
+          uri: http://localhost:8084
           predicates:
             - Path=/cart/**
 
 
         - id: product-route
-          uri: lb://product-service
+          uri: http://localhost:8082
           predicates:
             - Path=/products/**
 
 
         - id: sales-route
-          uri: lb://sales-service
+          uri: http://localhost:8085
           predicates:
             - Path=/sales/**
-          
+
 
 management:
   endpoints:
