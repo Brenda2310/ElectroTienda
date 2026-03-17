@@ -29,3 +29,16 @@ eureka:
     register-with-eureka: true
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      cart-service:
+        registerHealthIndicator: true
+        slidingWindowSize: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        recordExceptions:
+          - feign.FeignException
+          - java.net.ConnectException
