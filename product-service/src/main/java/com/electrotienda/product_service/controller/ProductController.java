@@ -26,7 +26,7 @@ public class ProductController{
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO product, @RequestBody Integer initialStock){
+    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO product, @RequestParam Integer initialStock){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createProduct(product, initialStock));
     }
 }
