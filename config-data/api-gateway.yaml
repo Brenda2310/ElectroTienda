@@ -8,15 +8,21 @@ spring:
         - id: product-route
           uri: http://localhost:8082
           predicates:
-            - Path=/products/**
+            - name: Path
+              args:
+                pattern: /products/**
         - id: cart-route
           uri: http://localhost:8084
           predicates:
-            - Path=/cart/**
+            - name: Path
+              args:
+                pattern: /cart/**
         - id: sales-route
           uri: http://localhost:8085
           predicates:
-            - Path=/sales/**
+            - name: Path
+              args:
+                pattern: /sales/**
 
 management:
   endpoints:
