@@ -46,7 +46,7 @@ public class ProductService implements IProductService{
         ProductEntity savedProduct = repository.save(product);
 
         ProductCreatedEvent event = ProductCreatedEvent.builder()
-                .productId(product.getId())
+                .productId(savedProduct.getId())
                 .initialStock(initialStock)
                 .build();
 

@@ -2,10 +2,12 @@ package com.electrotienda.inventory_service.consumer;
 
 import com.electrotienda.inventory_service.client.CartClient;
 import com.electrotienda.inventory_service.dto.CartItemDTO;
+import com.electrotienda.inventory_service.event.ProductCreatedEvent;
 import com.electrotienda.inventory_service.event.SaleCreatedEvent;
 import com.electrotienda.inventory_service.service.IInventoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +33,17 @@ public class InventoryConsumer {
 
         } catch (Exception e) {
             log.error("❌ Error procesando el inventario: {}", e.getMessage());
+        }
+    }
+
+    @KafkaListener(topics = "product-topic", groupId = "inventory-group")
+    public void consumeProductCreated(ProductCreatedEvent event) {
+        log.info("📥 Evento recibido de Kafka: Inicializando stock para Producto ID: {}", event.getProductId());
+
+        try {
+            service.initializeStock(event.getProductId(), event.getInitialStock());
+        } catch (Exception e) {
+            log.error("❌ Error al inicializar el stock: {}", e.getMessage());
         }
     }
 }

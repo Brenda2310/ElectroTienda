@@ -20,6 +20,8 @@ spring:
    producer:
     key-serializer: org.apache.kafka.common.serialization.StringSerializer
     value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    properties:
+      spring.json.type.mapping: "sale:com.electrotienda.sales_service.event.SaleCreatedEvent"
 
 eureka:
   instance:
