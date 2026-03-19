@@ -44,3 +44,9 @@ resilience4j:
         recordExceptions:
           - feign.FeignException
           - java.net.ConnectException
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
