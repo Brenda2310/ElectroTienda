@@ -50,6 +50,7 @@ public class SaleService implements ISaleService{
                 .build();
 
         kafkaTemplate.send("inventory-topic", event);
+        kafkaTemplate.send("notification-topic", event);
 
         return saved;
     }
