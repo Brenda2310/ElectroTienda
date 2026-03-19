@@ -27,6 +27,33 @@ spring:
           uri: http://localhost:8087
           predicates:
               - Path=/inventory/**
+        - id: product-health
+          uri: http://localhost:8082
+          predicates:
+            - Path=/product/health
+          filters:
+            - RewritePath=/product/health, /actuator/health
+
+        - id: cart-health
+          uri: http://localhost:8084
+          predicates:
+            - Path=/cart/health
+          filters:
+            - RewritePath=/cart/health, /actuator/health
+
+        - id: sales-health
+          uri: http://localhost:8085
+          predicates:
+            - Path=/sales/health
+          filters:
+            - RewritePath=/sales/health, /actuator/health
+
+        - id: inventory-health
+          uri: http://localhost:8087
+          predicates:
+            - Path=/inventory/health
+          filters:
+            - RewritePath=/inventory/health, /actuator/health
 
 management:
   endpoints:
