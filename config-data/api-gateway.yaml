@@ -30,30 +30,30 @@ spring:
         - id: product-health
           uri: http://localhost:8082
           predicates:
-            - Path=/product/health
+            - Path=/health/product/**
           filters:
-            - RewritePath=/product/health, /actuator/health
+            - RewritePath=/health/product/?(?<segment>.*), /actuator/health
 
         - id: cart-health
           uri: http://localhost:8084
           predicates:
-            - Path=/cart/health
+            - Path=/health/cart/**
           filters:
-            - RewritePath=/cart/health, /actuator/health
+            - RewritePath=/health/cart/?(?<segment>.*), /actuator/health
 
         - id: sales-health
           uri: http://localhost:8085
           predicates:
-            - Path=/sales/health
+            - Path=/health/sales/**
           filters:
-            - RewritePath=/sales/health, /actuator/health
+            - RewritePath=/health/sales/?(?<segment>.*), /actuator/health
 
         - id: inventory-health
           uri: http://localhost:8087
           predicates:
-            - Path=/inventory/health
+            - Path=/health/inventory/**
           filters:
-            - RewritePath=/inventory/health, /actuator/health
+            - RewritePath=/health/inventory/?(?<segment>.*), /actuator/health
 
 management:
   endpoints:
