@@ -5,6 +5,7 @@ spring:
   cloud:
     gateway:
       routes:
+        #ROUTES
         - id: product-route
           uri: http://localhost:8082
           predicates:
@@ -27,6 +28,8 @@ spring:
           uri: http://localhost:8087
           predicates:
               - Path=/inventory/**
+
+        #ACTUATOR ROUTES
         - id: product-health
           uri: http://localhost:8082
           predicates:
@@ -55,6 +58,49 @@ spring:
           filters:
             - RewritePath=/health/inventory/?(?<segment>.*), /actuator/health
 
+        #SWAGGER ROUTES
+        - id: product-docs
+          uri: http://localhost:8082
+          predicates:
+            - Path=/v3/api-docs/products
+          filters:
+            - RewritePath=/v3/api-docs/products, /v3/api-docs
+
+        - id: cart-docs
+          uri: http://localhost:8084
+          predicates:
+            - Path=/v3/api-docs/cart
+          filters:
+            - RewritePath=/v3/api-docs/cart, /v3/api-docs
+
+        - id: sales-docs
+          uri: http://localhost:8085
+          predicates:
+            - Path=/v3/api-docs/sales
+          filters:
+            - RewritePath=/v3/api-docs/sales, /v3/api-docs
+
+        - id: inventory-docs
+          uri: http://localhost:8087
+          predicates:
+            - Path=/v3/api-docs/inventory
+          filters:
+            - RewritePath=/v3/api-docs/inventory, /v3/api-docs
+
+#SWAGGER CONFIG
+springdoc:
+  swagger-ui:
+    urls:
+      - name: Product Service
+        url: /v3/api-docs/products
+      - name: Cart Service
+        url: /v3/api-docs/cart
+      - name: Sales Service
+        url: /v3/api-docs/sales
+      - name: Inventory Service
+        url: /v3/api-docs/inventory
+
+#ACTUATOR CONFIG
 management:
   endpoints:
     web:
@@ -65,6 +111,7 @@ management:
     gateway:
       enabled: true
 
+#EUREKA CONFIG
 eureka:
   client:
     service-url:
