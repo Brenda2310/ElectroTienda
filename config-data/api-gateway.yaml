@@ -4,88 +4,90 @@ server:
 spring:
   cloud:
     gateway:
-      routes:
-        #ROUTES
-        - id: product-route
-          uri: http://localhost:8082
-          predicates:
-            - name: Path
-              args:
-                pattern: /products/**
-        - id: cart-route
-          uri: http://localhost:8084
-          predicates:
-            - name: Path
-              args:
-                pattern: /cart/**
-        - id: sales-route
-          uri: http://localhost:8085
-          predicates:
-            - name: Path
-              args:
-                pattern: /sales/**
-        - id: inventory-route
-          uri: http://localhost:8087
-          predicates:
-              - Path=/inventory/**
+      server:
+        webflux:
+         routes:
+          #ROUTES
+         - id: product-route
+           uri: http://localhost:8082
+           predicates:
+             - name: Path
+               args:
+                 pattern: /products/**
+         - id: cart-route
+           uri: http://localhost:8084
+           predicates:
+             - name: Path
+               args:
+                 pattern: /cart/**
+         - id: sales-route
+           uri: http://localhost:8085
+           predicates:
+             - name: Path
+               args:
+                 pattern: /sales/**
+         - id: inventory-route
+           uri: http://localhost:8087
+           predicates:
+             - Path=/inventory/**
 
-        #ACTUATOR ROUTES
-        - id: product-health
-          uri: http://localhost:8082
-          predicates:
-            - Path=/health/product/**
-          filters:
-            - RewritePath=/health/product/?(?<segment>.*), /actuator/health
+          #ACTUATOR ROUTES
+         - id: product-health
+           uri: http://localhost:8082
+           predicates:
+             - Path=/health/product/**
+           filters:
+             - RewritePath=/health/product/?(?<segment>.*), /actuator/health
 
-        - id: cart-health
-          uri: http://localhost:8084
-          predicates:
-            - Path=/health/cart/**
-          filters:
-            - RewritePath=/health/cart/?(?<segment>.*), /actuator/health
+         - id: cart-health
+           uri: http://localhost:8084
+           predicates:
+             - Path=/health/cart/**
+           filters:
+             - RewritePath=/health/cart/?(?<segment>.*), /actuator/health
 
-        - id: sales-health
-          uri: http://localhost:8085
-          predicates:
-            - Path=/health/sales/**
-          filters:
-            - RewritePath=/health/sales/?(?<segment>.*), /actuator/health
+         - id: sales-health
+           uri: http://localhost:8085
+           predicates:
+             - Path=/health/sales/**
+           filters:
+             - RewritePath=/health/sales/?(?<segment>.*), /actuator/health
 
-        - id: inventory-health
-          uri: http://localhost:8087
-          predicates:
-            - Path=/health/inventory/**
-          filters:
-            - RewritePath=/health/inventory/?(?<segment>.*), /actuator/health
+         - id: inventory-health
+           uri: http://localhost:8087
+           predicates:
+             - Path=/health/inventory/**
+           filters:
+             - RewritePath=/health/inventory/?(?<segment>.*), /actuator/health
 
-        #SWAGGER ROUTES
-        - id: product-docs
-          uri: http://localhost:8082
-          predicates:
-            - Path=/v3/api-docs/products
-          filters:
-            - RewritePath=/v3/api-docs/products, /v3/api-docs
+          #SWAGGER ROUTES
+         - id: product-docs
+           uri: http://localhost:8082
+           predicates:
+             - Path=/v3/api-docs/products
+           filters:
+             - RewritePath=/v3/api-docs/products, /v3/api-docs
 
-        - id: cart-docs
-          uri: http://localhost:8084
-          predicates:
-            - Path=/v3/api-docs/cart
-          filters:
-            - RewritePath=/v3/api-docs/cart, /v3/api-docs
+         - id: cart-docs
+           uri: http://localhost:8084
+           predicates:
+             - Path=/v3/api-docs/cart
+           filters:
+             - RewritePath=/v3/api-docs/cart, /v3/api-docs
 
-        - id: sales-docs
-          uri: http://localhost:8085
-          predicates:
-            - Path=/v3/api-docs/sales
-          filters:
-            - RewritePath=/v3/api-docs/sales, /v3/api-docs
+         - id: sales-docs
+           uri: http://localhost:8085
+           predicates:
+             - Path=/v3/api-docs/sales
+           filters:
+             - RewritePath=/v3/api-docs/sales, /v3/api-docs
 
-        - id: inventory-docs
-          uri: http://localhost:8087
-          predicates:
-            - Path=/v3/api-docs/inventory
-          filters:
-            - RewritePath=/v3/api-docs/inventory, /v3/api-docs
+         - id: inventory-docs
+           uri: http://localhost:8087
+           predicates:
+             - Path=/v3/api-docs/inventory
+           filters:
+             - RewritePath=/v3/api-docs/inventory, /v3/api-docs
 
 #SWAGGER CONFIG
 springdoc:
