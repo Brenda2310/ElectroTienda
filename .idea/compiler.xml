@@ -11,7 +11,7 @@
         <module name="eu.electrotienda" />
         <module name="config-server" />
       </profile>
-      <profile name="Annotation profile for inventory-service" enabled="true">
+      <profile name="Annotation profile for sales-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -20,8 +20,8 @@
         </processorPath>
         <module name="product-service" />
         <module name="cart-service" />
-        <module name="inventory-service" />
         <module name="sales-service" />
+        <module name="inventory-service" />
         <module name="notification-service" />
       </profile>
     </annotationProcessing>
